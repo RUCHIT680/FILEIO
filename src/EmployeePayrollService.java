@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,13 +9,9 @@ public class EmployeePayRollService {
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
 	}
-
 	private List<EmployeePayRollData> employeePayrollList;
-	//public EmployeePayRollService() {};
-
 	public EmployeePayRollService() {
 	};
-
 	public EmployeePayRollService(List<EmployeePayRollData> employeePayrollList) {
 		this.employeePayrollList = employeePayrollList;
 	}
@@ -20,11 +20,10 @@ public class EmployeePayRollService {
 		EmployeePayRollService employeePayRollService = new EmployeePayRollService(employeePayrollList);
 		Scanner sc = new Scanner(System.in);
 		employeePayRollService.readData(sc);
-		employeePayRollService.writeData();
 		employeePayRollService.writeData(null);
+		employeePayRollService.writeData();
 	}
 
-	private void readData(Scanner sc) {
 	public void readData(Scanner sc) {
 		System.out.println("Enter ID:");
 		int id = sc.nextInt();
@@ -34,26 +33,34 @@ public class EmployeePayRollService {
 		double salary = sc.nextDouble();
 		employeePayrollList.add(new EmployeePayRollData(id, name, salary));
 	}
-
-	private void writeData() {
-		System.out.println(employeePayrollList);
-	}
 	public void writeData(IOService ioService) {
 		if (ioService.equals(com.bridgelabz.employee.EmployeePayRollService.IOService.CONSOLE_IO))
 			System.out.println(employeePayrollList);
 		else if (ioService.equals(com.bridgelabz.employee.EmployeePayRollService.IOService.FILE_IO))
 			new EmployeePayrollFileIOService().writeData2(employeePayrollList);
 	}
-
 	public void printData(IOService ioService) {
 		if(ioService.equals(com.bridgelabz.employee.EmployeePayRollService.IOService.FILE_IO))
 			new com.bridgelabz.employee.EmployeePayrollFileIOService().printData();
 	}
-
 	public long countEntries(IOService ioService) {
 		if(ioService.equals(com.bridgelabz.employee.EmployeePayRollService.IOService.FILE_IO))
 			return new com.bridgelabz.employee.EmployeePayrollFileIOService().countEntries();
 		return 0;
 
+	}
+
+	public static boolean readFile() {
+		Path path = Paths.get("C:/Users/HP LAP/Desktop/BridgeLabz/FileIO/EmployeePayRoll/PayRollDoc.txt");
+		try {
+			String fileContent = Files.readString(path);
+			String []employees = fileContent.split(",");
+			for(String employee:employees)
+				System.out.println(employee);
+			return true;
+		} catch (IOException e) {
+			System.out.println(" directory not found");
+		}
+		return false;
 	}
 }
