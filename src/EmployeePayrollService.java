@@ -1,66 +1,17 @@
 
 
-	import java.util.ArrayList;
-	import java.util.List;
-	import java.util.Scanner;
-	public class EmployeePayrollService {
-	    private List<EmployeePayrollData> employeePayrollList;
-	    public EmployeePayrollService() {
-	    }
-	    public EmployeePayrollService(List<EmployeePayrollData> employeePayrollList) {
-	        this.employeePayrollList = employeePayrollList;
-	    }
+	import java.io.File;
 
-	    public static void main(String[] args) {
-	        System.out.println("Welcome to Employee Payroll Service Program");
-//	        ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-//	        EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
-//	        Scanner consoleInputReader = new Scanner(System.in);
-//	        employeePayrollService.readEmployeePayrollData(consoleInputReader);
-//	        employeePayrollService.writeEmployeePayrollData();
-	        ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
-	        EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
-	        Scanner consoleInputReader = new Scanner(System.in);
-	        employeePayrollService.readEmployeePayrollData(consoleInputReader);
-	        employeePayrollService.writeEmployeePayrollData();
+public class EmployeePayroll {
+	public static boolean deleteFiles(File contentsToDelete) {
+		File[] allContents=contentsToDelete.listFiles();
+		if(allContents!=null) {
+			for(File file:allContents) {
+				deleteFiles(file);
 
-	    }
-
-	    private void writeEmployeePayrollData() {
-	        // TODO Auto-generated method stub
-	        System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
-
-	    }
-
-	    private void readEmployeePayrollData(Scanner consoleInputReader) {
-	        // TODO Auto-generated method stub
-	        System.out.println("Enter Employee ID:");
-	        int id = consoleInputReader.nextInt();
-	        System.out.println("Enter Employee Name:");
-	        String name = consoleInputReader.next();
-	        System.out.println("Enter Employee Salary:");
-	        double salary = consoleInputReader.nextDouble();
-	        employeePayrollList.add(new EmployeePayrollData(id, name, salary));
-
-	    }
-	//
-//	    private void writeEmployeePayrollData() {
-//	        // TODO Auto-generated method stub
-//	        System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
-	//
-//	    }
-	//
-//	    private void readEmployeePayrollData(Scanner consoleInputReader) {
-//	        // TODO Auto-generated method stub
-//	        System.out.println("Enter Employee ID:");
-//	        int id = consoleInputReader.nextInt();
-//	        System.out.println("Enter Employee Name:");
-//	        String name = consoleInputReader.next();
-//	        System.out.println("Enter Employee Salary:");
-//	        double salary = consoleInputReader.nextDouble();
-//	        employeePayrollList.add(new EmployeePayrollData(id, name, salary));
-	//
-//	    }
+			}
+		}
+		return contentsToDelete.delete();
 	}
 
-
+}
